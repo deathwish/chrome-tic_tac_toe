@@ -1,0 +1,16 @@
+{
+  "name": "Chrome Tac Toe",
+  "description": "Lose Tic Tac Toe against your browser.",
+  "version": "0.1",
+  "app": {
+    "launch": {
+      "local_path": "application.html"
+    }
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "128": "icon_128.png"
+  },
+  "permissions": [
+  ]
+}

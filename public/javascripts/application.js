@@ -1,0 +1,2 @@
+//= require <prototype>
+//= provide "./application"
