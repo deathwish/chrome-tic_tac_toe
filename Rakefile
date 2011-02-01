@@ -21,7 +21,7 @@ task :sprockets => [:clean, "build"] do
   secretary = Sprockets::Secretary.new(
                                        :asset_root => "build",
                                        :load_path => ["vendor/javascripts"],
-                                       :source_files => ["public/javascripts/application.js", "app/javascripts/**/*.js"]
+                                       :source_files => ["public/javascripts/*.js"]
                                        )
   concatenation = secretary.concatenation
   concatenation.save_to("build/application.js")
