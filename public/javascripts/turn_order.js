@@ -1,3 +1,5 @@
+//= require <prototype>
+
 var TurnOrder = Class.create({
 	initialize: function()
 	{

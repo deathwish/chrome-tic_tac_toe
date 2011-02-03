@@ -1,4 +1,5 @@
 //= provide "./board"
+//= require <prototype>
 //= require "base_controller"
 //= require "board"
 

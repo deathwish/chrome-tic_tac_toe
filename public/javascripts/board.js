@@ -1,3 +1,5 @@
+//= require <prototype>
+
 var Board = Class.create({
    initialize: function()
    {

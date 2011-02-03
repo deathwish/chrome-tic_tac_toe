@@ -1,4 +1,5 @@
 //= provide "./game"
+//= require <prototype>
 //= require "base_controller"
 //= require "board_controller"
 //= require "turn_order_controller"

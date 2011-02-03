@@ -1,3 +1,6 @@
+//= require <prototype>
+//= require "utils"
+
 var BaseController = Class.create({
 	initialize: function()
 	{

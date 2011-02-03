@@ -1,4 +1,5 @@
 //= provide "./turn_order"
+//= require <prototype>
 //= require "base_controller"
 //= require "turn_order"
 
