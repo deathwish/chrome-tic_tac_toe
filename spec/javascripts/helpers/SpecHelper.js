@@ -15,6 +15,16 @@ function waitsForAjax()
 			"Ajax request never completed", 3000);
 }
 
+function addContentDiv()
+{
+   $$('body')[0].insert({bottom: new Element('div', {id: 'content'})});
+}
+
+function removeContentDiv()
+{
+   $('content').remove();
+}
+
 Element.addMethods({
   click: function(el)
   {

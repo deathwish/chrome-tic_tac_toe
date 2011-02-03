@@ -1,16 +1,13 @@
 //= provide "./board"
+//= require "base_controller"
 //= require "board"
 
-var BoardController = Class.create({
-	initialize: function()
+var BoardController = Class.create(BaseController, {
+	initialize: function($super)
 	{
+	   $super();
 	   this._board = new Board();
-	   this.onComplete = this.onComplete.bind(this);
 	   this.onClick = this.onClick.bind(this);
-    },
-    show: function(el)
-    {
-	   new Ajax.Updater($(el), Utils.getResourceUrl('board.html'), {onComplete: this.onComplete});
     },
     board: function()
     {
@@ -27,8 +24,9 @@ var BoardController = Class.create({
 		  document.fire('board:moved', {piece: value, x: x, y: y, controller: this});
 	   }
     },
-    onComplete: function(ev)
+    onComplete: function($super, transport)
 	{
+	   $super(transport);
 	   $('game_board').observe("click", this.onClick);
 	},
 	onClick: function(ev)
@@ -38,7 +36,7 @@ var BoardController = Class.create({
 	   {
 		  var x = el.cellIndex;
 		  var y = el.up('tr').rowIndex;
-   		  $('game_board').fire('board:clicked', {x: x, y: y});
+   		  $('game_board').fire('board:clicked', {x: x, y: y, controller: this});
 	   }
 	}
 });

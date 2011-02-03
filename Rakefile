@@ -24,13 +24,20 @@ task :sprockets => [:clean, "build"] do
                                        :source_files => ["public/javascripts/*.js"]
                                        )
   concatenation = secretary.concatenation
-  concatenation.save_to("build/application.js")
+  concatenation.save_to("build/app.js")
   secretary.install_assets
+end
+
+task :merge_css => [:sprockets] do
+  files = Dir.glob 'build/*css'
+  output = 'build/app.css'
+  `cat #{files.join ' '} > #{output}`
+  FileUtils.rm_f files
 end
 
 require 'crxmake'
 desc "Build a Chrome extension (.CRX)"
-task :crx => [:sprockets, "dist"] do
+task :crx => [:sprockets, :merge_css, "dist"] do
   CrxMake.make(
                :ex_dir => "./build",
                :pkey   => "./support/test.pem",

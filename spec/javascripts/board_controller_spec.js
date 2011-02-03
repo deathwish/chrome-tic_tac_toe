@@ -2,11 +2,11 @@ describe("a board controller", function(){
    var controller;
    beforeEach(function(){
       controller = new BoardController();
-	  $$('body')[0].insert({bottom: new Element('div', {id: 'content'})});
+	  addContentDiv();
    });
 
    afterEach(function(){
-	  $('content').remove();
+	  removeContentDiv();
    });
 
    it('should show the board after being shown.', function(){
@@ -103,7 +103,7 @@ describe("a board controller", function(){
 			  });
 		});
 
-		describe("and had one of its cells clicked", function(){
+		describe("after having one of its cells clicked", function(){
 			var listener;
 			beforeEach(function(){
 				listener = jasmine.createSpy();
@@ -126,6 +126,13 @@ describe("a board controller", function(){
 					var ev = listener.mostRecentCall.args[0];
 					expect(ev.memo.x).toEqual(0);
 					expect(ev.memo.y).toEqual(0);
+			    });
+			});
+
+			it("provides a reference to itself", function(){
+				runs(function(){
+					var ev = listener.mostRecentCall.args[0];
+					expect(ev.memo.controller).toEqual(controller);
 			    });
 			});
 		});
