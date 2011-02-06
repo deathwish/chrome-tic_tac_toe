@@ -126,4 +126,19 @@ describe('a new Board', function(){
 		 place_X_on(0, 2);
 		 expect(board.winner()).toEqual('X');
    });
+
+   describe('constructed with an existing state', function(){
+		it('should load the provided state', function(){
+			board = new Board('X OXOX   ');
+			expect(board.get(0, 0)).toEqual('X');
+			expect(board.get(0, 1)).toBeNull();
+			expect(board.get(0, 2)).toEqual('O');
+			expect(board.get(1, 0)).toEqual('X');
+			expect(board.get(1, 1)).toEqual('O');
+			expect(board.get(1, 2)).toEqual('X');
+			expect(board.get(2, 0)).toBeNull();
+			expect(board.get(2, 1)).toBeNull();
+			expect(board.get(2, 2)).toBeNull();
+		});
+   });
 });

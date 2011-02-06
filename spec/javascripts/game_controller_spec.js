@@ -12,12 +12,21 @@ describe('a game controller', function(){
 		  expect(controller.turnOrderController()).toBeA(TurnOrderController);
     });
 
+	it('has an ai player controller', function(){
+		  expect(controller.aiPlayerController()).toBeA(AIPlayerController);
+    });
+
+	it("has the ai player playing 'O'", function(){
+		  expect(controller.aiPlayerController().piece()).toEqual('O');
+	});
+
 	describe('that has been shown', function(){
 		var bcc;
 		var tocc;
 		beforeEach(function(){
 			spyOn(controller.boardController(), "show");
 			spyOn(controller.turnOrderController(), "show");
+			spyOn(controller.aiPlayerController(), "show");
 			addContentDiv();
 			controller.show('content');
 			waitsForAjax();
@@ -29,6 +38,9 @@ describe('a game controller', function(){
 
 		it('shows the game display', function(){
 			expect($('game_display')).not.toBeNull();
+			expect($('board_container')).not.toBeNull();
+			expect($('turn_container')).not.toBeNull();
+			expect($('ai_container')).not.toBeNull();
 		});
 
 		it('shows the board controller in the board_container div', function(){
@@ -37,6 +49,10 @@ describe('a game controller', function(){
 
 		it('shows the turn order controller in the turn_container div', function(){
 			expect(controller.turnOrderController().show).toHaveBeenCalledWith('turn_container');
+		});
+
+		it('shows the ai controller in the ai_container div', function(){
+			expect(controller.aiPlayerController().show).toHaveBeenCalledWith('ai_container');
 		});
 
 	});

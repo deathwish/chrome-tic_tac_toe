@@ -10,6 +10,18 @@ var Board = Class.create({
 		 for(var j = 0; j < this.board[i].length; j++)
 			this.board[i][j] = null;
 	  }
+	  if(arguments[0])
+	  {
+		 for(var i = 0; i < this.rows(); i++)
+		 {
+			for(var j = 0; j < this.columns(); j++)
+			{
+			   var piece = arguments[0][i * 3 + j];
+			   if(piece != ' ')
+				  this.board[j][i] = piece;
+			}
+		 }
+	  }
 	  this.last_piece = null;
    },
 
