@@ -74,7 +74,7 @@ describe("a board controller", function(){
 		});
 		});
 
-		describe('after successfully placing a piece', function(){
+		describe('after unsuccessfully placing a piece', function(){
 			var listener;
 			beforeEach(function(){
 				listener = jasmine.createSpy();
@@ -96,6 +96,28 @@ describe("a board controller", function(){
 				var el = $('game_board').down('tr', 0).down('td', 0);
 				expect(el.innerHTML).not.toEqual("X");
 			  });
+			});
+		});
+
+		describe('after making a winning move', function(){
+			var listener;
+			beforeEach(function(){
+				listener = jasmine.createSpy();
+				spyOn(controller.board(), 'winner').andReturn('X');
+				document.observe('board:winner', listener);
+				controller.move(0, 0, 'O');
+			});
+
+			afterEach(function(){
+				document.stopObserving('board:winner', listener);
+			});
+
+			it('fires a board:winner event', function(){
+				expect(listener).toHaveBeenCalled();
+			});
+
+			it("provides the winner in the event", function(){
+				expect(listener.mostRecentCall.args[0].memo.piece).toEqual('X');
 			});
 		});
 

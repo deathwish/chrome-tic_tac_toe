@@ -23,6 +23,9 @@ var BoardController = Class.create(BaseController, {
 		  var td = tr.down('td', x);
 		  td.update(value);
 		  document.fire('board:moved', {piece: value, x: x, y: y, controller: this});
+		  var winner = this.board().winner();
+		  if(winner)
+			 document.fire('board:winner', {piece: winner});
 	   }
     },
     onComplete: function($super, transport)
