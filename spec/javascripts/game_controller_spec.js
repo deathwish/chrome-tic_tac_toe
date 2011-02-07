@@ -16,6 +16,10 @@ describe('a game controller', function(){
 		  expect(controller.aiPlayerController()).toBeA(AIPlayerController);
     });
 
+	it('does not have a result controller', function(){
+		  expect(controller.resultController()).toBeFalsy();
+    });
+
 	it("has the ai player playing 'O'", function(){
 		  expect(controller.aiPlayerController().piece()).toEqual('O');
 	});
@@ -35,6 +39,10 @@ describe('a game controller', function(){
 		afterEach(function(){
 			controller.hide();
 			removeContentDiv();
+		});
+
+		it('has a result controller', function(){
+			expect(controller.resultController()).toBeA(ResultController);
 		});
 
 		it('shows the game display', function(){
@@ -74,6 +82,28 @@ describe('a game controller', function(){
 
 			it('hides the ai controller', function(){
 				expect(controller.aiPlayerController().hide).toHaveBeenCalled();
+			});
+		});
+
+		describe('after recieving a board:winner event', function(){
+			beforeEach(function(){
+				spyOn(controller, 'hide');
+				spyOn(controller.resultController(), 'show');
+				spyOn(controller.resultController(), 'setWinner');
+				document.fire('board:winner', {piece: 'X'});
+				waitsForAjax();
+			});
+
+			it('hides itself', function(){
+				expect(controller.hide).toHaveBeenCalled();
+			});
+
+			it('shows the result controller', function(){
+				expect(controller.resultController().show).toHaveBeenCalledWith('content');
+			});
+
+			it('sets the winner', function(){
+				expect(controller.resultController().setWinner).toHaveBeenCalledWith('X');
 			});
 		});
 	});

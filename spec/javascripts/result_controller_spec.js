@@ -3,25 +3,31 @@ describe('a result controller', function(){
 
 	beforeEach(function(){
 		addContentDiv();
+		controller = new ResultController();
 	});
 
 	afterEach(function(){
 		removeContentDiv();
 	});
 
+	it('does not have a game controller', function(){
+		expect(controller.gameController()).toBeFalsy();
+	});
+
 	['X', 'O'].each(function(piece){
 		describe("provided a win by '" + piece  + "'", function(){
 			beforeEach(function(){
-				controller = new ResultController(piece);
-			});
-
-			it('has a game controller', function(){
-				expect(controller.gameController()).toBeA(GameController);
+				controller.setWinner(piece);
 			});
 
 			describe('after being shown', function(){
 				beforeEach(function(){
 					controller.show('content');
+					waitsForAjax();
+				});
+
+				afterEach(function(){
+					controller.hide();
 					waitsForAjax();
 				});
 
@@ -44,6 +50,10 @@ describe('a result controller', function(){
 						$('new_game_link').click();
 					});
 
+					it('has a game controller', function(){
+						expect(controller.gameController()).toBeA(GameController);
+					});
+
 					it('hides itself', function(){
 						expect(controller.hide).toHaveBeenCalled();
 					});
@@ -57,10 +67,6 @@ describe('a result controller', function(){
 	}, this);
 
 	describe('provided a draw', function(){
-		beforeEach(function(){
-			controller = new ResultController(null);
-		});
-
 		describe('after being shown', function(){
 			beforeEach(function(){
 				controller.show('content');

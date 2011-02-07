@@ -4,12 +4,14 @@
 //= require "game_controller"
 
 var ResultController = Class.create(BaseController, {
-	initialize: function($super, piece)
+	initialize: function($super)
 	{
 	   $super();
-	   this._piece = piece;
-	   this._gameController = new GameController();
 	   this.onNewGameClick = this.onNewGameClick.bind(this);
+	},
+	setWinner: function(piece)
+	{
+	   this._piece = piece;
 	},
 	gameController: function()
 	{
@@ -23,6 +25,7 @@ var ResultController = Class.create(BaseController, {
 		  message = 'Which is apt, since ' + this._piece + ' has won.';
 	   $('result_text').update(message);
 	   this.observe('click', this.onNewGameClick, 'new_game_link');
+	   this._gameController = new GameController();
 	},
     onNewGameClick: function(ev)
 	{

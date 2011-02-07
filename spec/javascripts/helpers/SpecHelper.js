@@ -11,7 +11,7 @@ beforeEach(function() {
 
 function waitsForAjax()
 {
-   waitsFor(function(){ return Ajax.activeRequestCount == 0; },
+   waitsFor(function(){ return Ajax.activeRequestCount <= 0; },
 			"Ajax request never completed", 3000);
 }
 
