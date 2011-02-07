@@ -29,5 +29,12 @@ var GameController = Class.create(BaseController, {
 	   this.boardController().show('board_container');
 	   this.turnOrderController().show('turn_container');
 	   this.aiPlayerController().show('ai_container');
+	},
+	hide: function($super)
+	{
+	   $super();
+	   this.boardController().hide();
+	   this.turnOrderController().hide();
+	   this.aiPlayerController().hide();
 	}
 });

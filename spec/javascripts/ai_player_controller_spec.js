@@ -24,6 +24,7 @@ describe('an ai player controller', function(){
 		});
 
 		afterEach(function(){
+			controller.hide();
 			removeContentDiv();
 		});
 

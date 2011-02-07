@@ -18,8 +18,8 @@ var TurnOrderController = Class.create(BaseController, {
 	onComplete: function($super, transport)
 	{
 	   $super(transport);
-	   document.observe('board:moved', this.onMove);
-	   document.observe('board:clicked', this.onBoardClicked);
+	   this.observe('board:moved', this.onMove);
+	   this.observe('board:clicked', this.onBoardClicked);
 	},
 	onMove: function(ev)
 	{

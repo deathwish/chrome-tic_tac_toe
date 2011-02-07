@@ -21,7 +21,7 @@ var AIPlayerController = Class.create(BaseController, {
 	},
 	onComplete: function($super, transport)
 	{
-	   document.observe('board:moved', this.onMoved);
+	   this.observe('board:moved', this.onMoved);
 	},
 	onMoved: function(ev)
 	{

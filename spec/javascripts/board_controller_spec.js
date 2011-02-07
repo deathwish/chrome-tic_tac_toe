@@ -30,6 +30,10 @@ describe("a board controller", function(){
 			waitsForAjax();
 		});
 
+		afterEach(function(){
+			controller.hide();
+		});
+
 		describe('after successfully placing a piece', function(){
 			var listener;
 			beforeEach(function(){

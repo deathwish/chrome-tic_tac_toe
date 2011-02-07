@@ -16,6 +16,7 @@ describe('a turn order controller', function(){
 		});
 
 		afterEach(function(){
+			controller.hide();
 			removeContentDiv();
 		});
 

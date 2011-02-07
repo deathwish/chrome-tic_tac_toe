@@ -28,7 +28,7 @@ var BoardController = Class.create(BaseController, {
     onComplete: function($super, transport)
 	{
 	   $super(transport);
-	   $('game_board').observe("click", this.onClick);
+	   this.observe("click", this.onClick, 'game_board');
 	},
 	onClick: function(ev)
 	{

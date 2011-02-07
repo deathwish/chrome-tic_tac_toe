@@ -49,6 +49,19 @@ describe('the controller base', function(){
 		});
 	});
 
+	describe('hide method', function(){
+		it('unregisters all event listeners added with observe', function(){
+			  var handler = function(){};
+			  spyOn(document, 'stopObserving').andCallThrough();
+			  spyOn($('content'), 'stopObserving').andCallThrough();
+			  controller.observe('some:event1', handler);
+			  controller.observe('some:event2', handler, 'content');
+			  controller.hide();
+			  expect(document.stopObserving).toHaveBeenCalledWith('some:event1', handler);
+			  expect($('content').stopObserving).toHaveBeenCalledWith('some:event2', handler);
+		});
+	});
+
 	describe('the className method', function(){
 		it('should return "BaseController" when called on a BaseController', function(){
 			  expect(controller.className()).toEqual("BaseController");
@@ -56,6 +69,32 @@ describe('the controller base', function(){
 		it('should return "TestController" when called on a TestController', function(){
 			  var tc = new TestController();
 			  expect(tc.className()).toEqual("TestController");
+		});
+	});
+
+	describe('the observe method', function(){
+		var handler = function(){};
+
+		describe('called without an element', function(){
+			beforeEach(function(){
+				spyOn(document, 'observe');
+				controller.observe('some:event', handler);
+			});
+
+			it('observes the provided event on the document', function(){
+				expect(document.observe).toHaveBeenCalledWith('some:event', handler);
+			});
+		});
+
+		describe('called with an element', function(){
+			beforeEach(function(){
+				spyOn($('content'), 'observe');
+				controller.observe('some:event', handler, 'content');
+			});
+
+			it('observes the provided event on the element', function(){
+				expect($('content').observe).toHaveBeenCalledWith('some:event', handler);
+			});
 		});
 	});
 });

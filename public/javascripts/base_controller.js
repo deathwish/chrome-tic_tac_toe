@@ -5,6 +5,7 @@ var BaseController = Class.create({
 	initialize: function()
 	{
 	   this.onComplete = this.onComplete.bind(this);
+	   this.listeners = [];
 	},
 	className: function()
 	{
@@ -20,7 +21,21 @@ var BaseController = Class.create({
 	   var view = this.className().underscore().gsub("_controller", "") + ".html";
 	   new Ajax.Updater($(el), Utils.getResourceUrl(view), {onComplete: this.onComplete});
 	},
+	hide: function()
+	{
+	   this.listeners.each(function(listener){
+			listener.element.stopObserving(listener.event, listener.callback);
+	   });
+	},
 	onComplete: function(transport)
 	{
+	},
+	observe: function(event, callback, element)
+	{
+	   var el = document;
+	   if(element)
+		  el = $(element);
+	   el.observe(event, callback);
+	   this.listeners.push({element: el, event: event, callback: callback});
 	}
 });

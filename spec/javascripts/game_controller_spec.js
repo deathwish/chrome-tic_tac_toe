@@ -33,6 +33,7 @@ describe('a game controller', function(){
 		});
 
 		afterEach(function(){
+			controller.hide();
 			removeContentDiv();
 		});
 
@@ -55,5 +56,25 @@ describe('a game controller', function(){
 			expect(controller.aiPlayerController().show).toHaveBeenCalledWith('ai_container');
 		});
 
+		describe('and been hidden', function(){
+			beforeEach(function(){
+				spyOn(controller.boardController(), 'hide');
+				spyOn(controller.turnOrderController(), 'hide');
+				spyOn(controller.aiPlayerController(), 'hide');
+				controller.hide();
+			});
+
+			it('hides the board controller', function(){
+				expect(controller.boardController().hide).toHaveBeenCalled();
+			});
+
+			it('hides the turn order controller', function(){
+				expect(controller.turnOrderController().hide).toHaveBeenCalled();
+			});
+
+			it('hides the ai controller', function(){
+				expect(controller.aiPlayerController().hide).toHaveBeenCalled();
+			});
+		});
 	});
 });
