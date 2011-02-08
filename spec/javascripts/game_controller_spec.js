@@ -85,26 +85,49 @@ describe('a game controller', function(){
 			});
 		});
 
-		describe('after recieving a board:winner event', function(){
-			beforeEach(function(){
-				spyOn(controller, 'hide');
-				spyOn(controller.resultController(), 'show');
-				spyOn(controller.resultController(), 'setWinner');
-				document.fire('board:winner', {piece: 'X'});
-				waitsForAjax();
+		// written against the DOM because there appear to be some spy issues
+		// in this context.
+		describe('after ending the game', function(){
+			describe('with a draw', function(){
+				beforeEach(function(){
+					document.fire('board:drawn');
+					waitsForAjax();
+				});
+
+				it('shows the result controller', function(){
+					expect($('result_text')).not.toBeNull();
+				});
+
+				it('displays a draw', function(){
+					expect($('result_text').innerHTML).toMatch('draw');
+				});
 			});
 
-			it('hides itself', function(){
-				expect(controller.hide).toHaveBeenCalled();
+			describe('with a win by X', function(){
+				beforeEach(function(){
+					document.fire('board:winner', {piece: 'X'});
+					waitsForAjax();
+				});
+
+				it('shows the result controller', function(){
+					expect($('result_text')).not.toBeNull();
+				});
+
+				it('displays X', function(){
+					expect($('result_text').innerHTML).toMatch('X');
+				});
 			});
 
-			it('shows the result controller', function(){
-				expect(controller.resultController().show).toHaveBeenCalledWith('content');
-			});
+			describe('with a win by O', function(){
+				beforeEach(function(){
+					document.fire('board:winner', {piece: 'O'});
+					waitsForAjax();
+				});
 
-			it('sets the winner', function(){
-				expect(controller.resultController().setWinner).toHaveBeenCalledWith('X');
+				it('displays O', function(){
+					expect($('result_text').innerHTML).toMatch('O');
+				});
 			});
-		});
+	   });
 	});
 });

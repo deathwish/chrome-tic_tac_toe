@@ -13,6 +13,7 @@ var GameController = Class.create(BaseController, {
 	   this._turn_order_controller = new TurnOrderController();
 	   this._ai_player_controller = new AIPlayerController('O');
 	   this.onWinner = this.onWinner.bind(this);
+	   this.onDrawn = this.onDrawn.bind(this);
 	},
 	boardController: function()
 	{
@@ -36,12 +37,22 @@ var GameController = Class.create(BaseController, {
 	   this.turnOrderController().show('turn_container');
 	   this.aiPlayerController().show('ai_container');
 	   this.observe('board:winner', this.onWinner);
+	   this.observe('board:drawn', this.onDrawn);
 	   this._result_controller = new ResultController();
 	},
 	onWinner: function(ev)
 	{
 	   this.hide();
 	   this.resultController().setWinner(ev.memo.piece);
+	   this.showResult();
+	},
+	onDrawn: function(ev)
+	{
+	   this.hide();
+	   this.showResult();
+	},
+	showResult: function()
+	{
 	   this.resultController().show('content');
 	},
 	hide: function($super)

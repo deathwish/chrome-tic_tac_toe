@@ -121,6 +121,24 @@ describe("a board controller", function(){
 			});
 		});
 
+		describe('after making a drawing move', function(){
+			var listener;
+			beforeEach(function(){
+				listener = jasmine.createSpy();
+				spyOn(controller.board(), 'drawn').andReturn(true);
+				document.observe('board:drawn', listener);
+				controller.move(0, 0, 'O');
+			});
+
+			afterEach(function(){
+				document.stopObserving('board:drawn', listener);
+			});
+
+			it('fires a board:drawn event', function(){
+				expect(listener).toHaveBeenCalled();
+			});
+		});
+
 		it("does not update the display when a move is made on another board", function(){
 			  runs(function(){
 				(new Board()).move(0, 0, "X");

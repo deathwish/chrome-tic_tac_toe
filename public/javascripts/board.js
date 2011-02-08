@@ -55,6 +55,17 @@ var Board = Class.create({
 	  return first_cell;
    },
 
+   drawn: function()
+   {
+	  if(this.winner())
+		 return false;
+	  for(var i = 0; i < this.rows(); i++)
+		 for(var j = 0; j < this.columns(); j++)
+			if(this.get(i, j) == null)
+			   return false;
+	  return true;
+   },
+
    rows: function()
    {
 	  return 3;

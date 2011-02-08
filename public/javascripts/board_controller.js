@@ -26,6 +26,10 @@ var BoardController = Class.create(BaseController, {
 		  var winner = this.board().winner();
 		  if(winner)
 			 document.fire('board:winner', {piece: winner});
+		  else if(this.board().drawn())
+		  {
+ 			 document.fire('board:drawn');
+		  }
 	   }
     },
     onComplete: function($super, transport)

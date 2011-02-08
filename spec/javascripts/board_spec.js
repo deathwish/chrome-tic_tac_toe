@@ -127,6 +127,44 @@ describe('a new Board', function(){
 		 expect(board.winner()).toEqual('X');
    });
 
+   it('should be drawn after filling the board without a win', function(){
+		 place_X_on(0, 0);
+		 place_O_on(0, 1);
+		 place_X_on(0, 2);
+		 place_O_on(1, 0);
+		 place_X_on(1, 1);
+		 place_O_on(2, 0);
+		 place_X_on(2, 1);
+		 place_O_on(2, 2);
+		 place_X_on(1, 2);
+		 expect(board.drawn()).toBeTruthy();
+   });
+
+   it('should not be drawn without filling the board', function(){
+		 place_X_on(0, 0);
+		 place_O_on(0, 1);
+		 place_X_on(0, 2);
+		 place_O_on(1, 0);
+		 place_X_on(1, 1);
+		 place_O_on(2, 0);
+		 place_X_on(2, 1);
+		 place_O_on(2, 2);
+		 expect(board.drawn()).toBeFalsy();
+   });
+
+   it('should not be drawn with a full board containing a win', function(){
+		 place_X_on(0, 0);
+		 place_O_on(0, 1);
+		 place_X_on(0, 2);
+		 place_O_on(1, 0);
+		 place_X_on(1, 1);
+		 place_O_on(1, 2);
+		 place_X_on(2, 0);
+		 place_O_on(2, 1);
+		 place_X_on(2, 2);
+		 expect(board.drawn()).toBeFalsy();
+   });
+
    describe('constructed with an existing state', function(){
 		it('should load the provided state', function(){
 			board = new Board('X OXOX   ');
