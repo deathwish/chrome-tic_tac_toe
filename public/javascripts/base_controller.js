@@ -18,8 +18,14 @@ var BaseController = Class.create({
 	},
 	show: function(el)
 	{
+	   var callback = arguments[1];
 	   var view = this.className().underscore().gsub("_controller", "") + ".html";
-	   new Ajax.Updater($(el), Utils.getResourceUrl(view), {onComplete: this.onComplete});
+	   new Ajax.Updater($(el), Utils.getResourceUrl(view), {
+						   onComplete: (function(transport) {
+							  this.onComplete(transport);
+							  if(callback && callback.onComplete)
+								 callback.onComplete(transport);
+						   }).bind(this)});
 	},
 	hide: function()
 	{

@@ -21,6 +21,12 @@ var AIPlayerController = Class.create(BaseController, {
 	{
 	   this._player = new AIPlayer(piece);
 	},
+	move: function(controller)
+	{
+   	   var board = controller.board();
+	   var pt = this.player().move(board);
+	   document.fire('board:clicked', {x: pt[0], y: pt[1], controller: controller});
+	},
 	onComplete: function($super, transport)
 	{
 	   this.observe('board:moved', this.onMoved);
@@ -28,10 +34,6 @@ var AIPlayerController = Class.create(BaseController, {
 	onMoved: function(ev)
 	{
 	   if(this.piece() != ev.memo.piece)
-	   {
-   		  var board = ev.memo.controller.board();
-		  var pt = this.player().move(board);
-		  document.fire('board:clicked', {x: pt[0], y: pt[1], controller: ev.memo.controller});
-	   }
+		  this.move(ev.memo.controller);
 	}
 });

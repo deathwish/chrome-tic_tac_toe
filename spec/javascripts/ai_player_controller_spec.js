@@ -1,7 +1,10 @@
 describe('an ai player controller', function(){
 	var controller;
+	var BoardControllerMock;
+
 	beforeEach(function(){
 		controller = new AIPlayerController();
+		BoardControllerMock = { board: function() { return new Board("    X    "); } };
 	});
 
 	it('does not have an ai player', function(){
@@ -29,6 +32,37 @@ describe('an ai player controller', function(){
 			expect(controller.player().piece()).toEqual('X');
 		});
 
+		describe('a call to the move method', function(){
+			var board;
+			var listener;
+			beforeEach(function(){
+				spyOn(controller.player(), 'move').andReturn([0, 0]);
+				listener = jasmine.createSpy();
+				document.observe('board:clicked', listener);
+				spyOn(BoardControllerMock, 'board').andCallThrough();
+				controller.move(BoardControllerMock);
+			});
+
+			afterEach(function(){
+				document.stopObserving('board:clicked', listener);
+			});
+
+			it('retrieves the board from the controller', function(){
+				expect(BoardControllerMock.board).toHaveBeenCalled();
+			});
+
+			it('calls the ai players move method with a board', function(){
+				expect(controller.player().move.mostRecentCall.args[0]).toBeA(Board);
+			});
+
+			it('fires a board:clicked event with the coordinates provided by the ai and the controller', function(){
+				expect(listener).toHaveBeenCalled();
+				expect(listener.mostRecentCall.args[0].memo.x).toEqual(0);
+				expect(listener.mostRecentCall.args[0].memo.y).toEqual(0);
+				expect(listener.mostRecentCall.args[0].memo.controller).toEqual(BoardControllerMock);
+			});
+		});
+
 		describe('that has been shown', function(){
 			beforeEach(function(){
 				addContentDiv();
@@ -46,26 +80,11 @@ describe('an ai player controller', function(){
 			});
 
 			describe('after receiving a board:moved event', function(){
-				var listener;
 				var memo;
-
 				beforeEach(function(){
 					spyOn(controller.player(), 'move').andReturn([0, 0]);
-					listener = jasmine.createSpy();
-					document.observe('board:clicked', listener);
-					memo = {x: 1,
-							y: 1,
-							controller: {
-							   board: function() {
-								  return new Board("    X    ");
-							   }
-							}
-						   };
-					spyOn(memo.controller, 'board').andCallThrough();
-				});
-
-				afterEach(function(){
-					document.stopObserving('board:clicked', listener);
+					memo = {x: 1, y: 1, controller: BoardControllerMock };
+					spyOn(controller, 'move');
 				});
 
 				describe('with the opponents piece', function(){
@@ -74,19 +93,8 @@ describe('an ai player controller', function(){
 						document.fire('board:moved', memo);
 					});
 
-					it('retrieves the board from the controller', function(){
-						expect(memo.controller.board).toHaveBeenCalled();
-					});
-
-					it('calls the ai players move method with a board', function(){
-						expect(controller.player().move.mostRecentCall.args[0]).toBeA(Board);
-					});
-
-					it('fires a board:clicked event with the coordinates provided by the ai and the controller', function(){
-						expect(listener).toHaveBeenCalled();
-						expect(listener.mostRecentCall.args[0].memo.x).toEqual(0);
-						expect(listener.mostRecentCall.args[0].memo.y).toEqual(0);
-						expect(listener.mostRecentCall.args[0].memo.controller).toEqual(memo.controller);
+					it('calls move()', function(){
+						expect(controller.move).toHaveBeenCalled();
 					});
 				});
 
@@ -96,8 +104,8 @@ describe('an ai player controller', function(){
 						document.fire('board:moved', memo);
 					});
 
-					it('does not fire a board:clicked event', function(){
-						expect(listener).not.toHaveBeenCalled();
+					it('does not call move()', function(){
+						expect(controller.move).not.toHaveBeenCalled();
 					});
 				});
 			});

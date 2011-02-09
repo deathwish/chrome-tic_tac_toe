@@ -12,7 +12,7 @@ beforeEach(function() {
 function waitsForAjax()
 {
    waitsFor(function(){ return Ajax.activeRequestCount <= 0; },
-			"Ajax request never completed", 3000);
+			"Ajax request never completed", 1000);
 }
 
 function addContentDiv()

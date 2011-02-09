@@ -20,17 +20,50 @@ describe('a game controller', function(){
 		  expect(controller.resultController()).toBeFalsy();
     });
 
-	it("has the ai player playing 'O'", function(){
-		  expect(controller.aiPlayerController().piece()).toEqual('O');
+	it("has not set the ai player's piece", function(){
+		expect(controller.aiPlayerController().piece()).toBeFalsy();
+	});
+
+	describe("the setupAI method", function(){
+		beforeEach(function(){
+			spyOn(controller.aiPlayerController(), 'setPiece');
+		});
+	});
+
+	describe('the startAI method', function(){
+		describe('when the RNG returns < 0.5', function(){
+			beforeEach(function(){
+				spyOn(Math, 'random').andReturn(0.4);
+				spyOn(controller.aiPlayerController(), 'move').andReturn(undefined);
+				controller.startAI();
+			});
+
+			it('does not tell the ai controller to move', function(){
+				expect(controller.aiPlayerController().move).not.toHaveBeenCalledWith(controller.boardController());
+			});
+		});
+
+		describe('when the RNG returns >= 0.5', function(){
+			beforeEach(function(){
+				spyOn(Math, 'random').andReturn(0.5);
+				spyOn(controller.aiPlayerController(), 'move').andReturn(undefined);
+				controller.startAI();
+			});
+
+			it('tells the ai controller to move', function(){
+				expect(controller.aiPlayerController().move).toHaveBeenCalledWith(controller.boardController());
+			});
+		});
 	});
 
 	describe('that has been shown', function(){
 		var bcc;
 		var tocc;
 		beforeEach(function(){
-			spyOn(controller.boardController(), "show");
-			spyOn(controller.turnOrderController(), "show");
-			spyOn(controller.aiPlayerController(), "show");
+			spyOn(controller.boardController(), "show").andCallThrough();
+			spyOn(controller.turnOrderController(), "show").andCallThrough();
+			spyOn(controller.aiPlayerController(), "show").andCallThrough();
+			spyOn(controller, 'startAI').andCallThrough();
 			addContentDiv();
 			controller.show('content');
 			waitsForAjax();
@@ -53,15 +86,19 @@ describe('a game controller', function(){
 		});
 
 		it('shows the board controller in the board_container div', function(){
-			expect(controller.boardController().show).toHaveBeenCalledWith('board_container');
-		});
+			expect(controller.boardController().show.mostRecentCall.args[0]).toEqual('board_container');
+		    });
 
 		it('shows the turn order controller in the turn_container div', function(){
-			expect(controller.turnOrderController().show).toHaveBeenCalledWith('turn_container');
+			expect(controller.turnOrderController().show.mostRecentCall.args[0]).toEqual('turn_container');
 		});
 
 		it('shows the ai controller in the ai_container div', function(){
-			expect(controller.aiPlayerController().show).toHaveBeenCalledWith('ai_container');
+			expect(controller.aiPlayerController().show.mostRecentCall.args[0]).toEqual('ai_container');
+		});
+
+		it('starts the ai', function(){
+			expect(controller.startAI).toHaveBeenCalled();
 		});
 
 		describe('and been hidden', function(){

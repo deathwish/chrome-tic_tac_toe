@@ -12,10 +12,17 @@ describe('the controller base', function(){
 	});
 
 	describe('the show method', function(){
+		var callback;
+		var transport = { };
 		beforeEach(function(){
-			spyOn(Ajax, 'Updater').andReturn(true);
+			spyOn(Ajax, 'Updater').andCallFake(function(el, url, args){
+												  if(args && args['onComplete'])
+													 args['onComplete'](transport);
+											   });
 			spyOn(Utils, 'getResourceUrl').andCallThrough();
-			controller.show('content');
+			spyOn(controller, 'onComplete');
+			callback = jasmine.createSpy();
+			controller.show('content', {onComplete: callback});
 		});
 		it('should make an AJAX call when show is called', function(){
 			expect(Ajax.Updater).toHaveBeenCalled();
@@ -33,8 +40,12 @@ describe('the controller base', function(){
 			expect(Ajax.Updater.mostRecentCall.args[1]).toMatch('base.html');
 		});
 
-		it('should pass a callback for onComplete', function(){
-			expect(Ajax.Updater.mostRecentCall.args[2]).not.toBeNull();
+		it('should call onComplete', function(){
+			expect(controller.onComplete).toHaveBeenCalled();
+		});
+
+		it('should run any provided callback', function(){
+			expect(callback).toHaveBeenCalled();
 		});
 
 		describe('of a subclass', function(){
