@@ -11,7 +11,8 @@ var GameController = Class.create(BaseController, {
 	   $super();
 	   this._board_controller = new BoardController();
 	   this._turn_order_controller = new TurnOrderController();
-	   this._ai_player_controller = new AIPlayerController('O');
+	   this._ai_player_controller = new AIPlayerController();
+	   this._ai_player_controller.setPiece('O');
 	   this.onWinner = this.onWinner.bind(this);
 	   this.onDrawn = this.onDrawn.bind(this);
 	},

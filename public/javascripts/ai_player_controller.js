@@ -4,11 +4,9 @@
 //= require "ai_player"
 
 var AIPlayerController = Class.create(BaseController, {
-	initialize: function($super, piece)
+	initialize: function($super)
 	{
 	   $super();
-	   this._player = new AIPlayer(piece);
-	   this._piece = piece;
 	   this.onMoved = this.onMoved.bind(this);
 	},
 	player: function()
@@ -17,7 +15,11 @@ var AIPlayerController = Class.create(BaseController, {
 	},
 	piece: function()
 	{
-	   return this.player().piece();
+	   return  this.player() ? this.player().piece() : null;
+	},
+	setPiece: function(piece)
+	{
+	   this._player = new AIPlayer(piece);
 	},
 	onComplete: function($super, transport)
 	{
