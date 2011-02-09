@@ -24,14 +24,22 @@ describe('a turn order controller', function(){
 			expect($('turn_order')).not.toBeNull();
 		});
 
+		it("displays the current player", function(){
+			expect($('turn_order').innerHTML).toMatch(controller.turnOrder().current());
+		});
+
 		describe("and received a board:moved event", function(){
 			beforeEach(function(){
-				spyOn(controller.turnOrder(), "turn");
+				spyOn(controller.turnOrder(), "turn").andCallThrough();
 				document.fire("board:moved", {});
 			});
 
 			it("moves the turn order", function(){
 				expect(controller.turnOrder().turn).toHaveBeenCalled();
+			});
+
+			it("updates the current player", function(){
+				expect($('turn_order').innerHTML).toMatch(controller.turnOrder().current());
 			});
 		});
 

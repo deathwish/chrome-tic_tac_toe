@@ -15,15 +15,21 @@ var TurnOrderController = Class.create(BaseController, {
 	{
 	   return this._turnOrder;
 	},
+	__updateTurnDisplay: function()
+	{
+	   $('turn_order').update(this.turnOrder().current() + "'s turn.");
+	},
 	onComplete: function($super, transport)
 	{
 	   $super(transport);
 	   this.observe('board:moved', this.onMove);
 	   this.observe('board:clicked', this.onBoardClicked);
+	   this.__updateTurnDisplay();
 	},
 	onMove: function(ev)
 	{
 	   this.turnOrder().turn();
+	   this.__updateTurnDisplay();
 	},
 	onBoardClicked: function(ev)
 	{
