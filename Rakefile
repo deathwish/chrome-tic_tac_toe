@@ -1,5 +1,7 @@
 require 'lib/boot.rb'
 
+task :default => :crx
+
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
