@@ -37,9 +37,13 @@ task :merge_css => [:sprockets] do
   FileUtils.rm_f files
 end
 
+task :copy_licence => [ "build" ] do
+  cp 'COPYING', "build"
+end
+
 require 'crxmake'
 desc "Build a Chrome extension (.CRX)"
-task :crx => [:sprockets, :merge_css, "dist"] do
+task :crx => [:sprockets, :merge_css, :copy_licence, "dist"] do
   CrxMake.make(
                :ex_dir => "./build",
                :pkey   => "./support/test.pem",

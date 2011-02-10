@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011, Lance Cooper (lance.m.cooper@gmail.com)
+ * See the included COPYING for licencing information.
+ */
+
 //= provide "./ai_player"
 //= require <prototype>
 //= require "base_controller"

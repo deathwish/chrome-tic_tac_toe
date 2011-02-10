@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011, Lance Cooper (lance.m.cooper@gmail.com)
+ * See the included COPYING for licencing information.
+ */
+
 describe('an AI player', function(){
 	// a full board, laid out as follows:
 	// XO?
