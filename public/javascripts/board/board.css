@@ -1,18 +1,18 @@
 #game_board table {
 	font-size: 36pt;
-	font-family: Helvetica, Ariel, sans-serif;
 
 	border-collapse:collapse;
+	border-color: #1e1e1e;
 
 	margin: 0px auto;
 }
 
 #game_board tr {
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid;
 }
 
 #game_board tr:last-child {
-	border-bottom: 0px solid white
+	border-bottom: 0px;
 }
 
 #game_board td {
@@ -24,8 +24,8 @@
 }
 
 #game_board tr td:first-child { 
-	border-right: 2px solid black;
+	border-right: 2px solid;
 }
 #game_board tr td:last-child { 
-	border-left: 2px solid black;
+	border-left: 2px solid;
 }

@@ -3,6 +3,11 @@ html, body {
 	height: 100%;
 	padding: 0px;
 	margin: 0px;
+
+	font-family: Helvetica, Ariel, sans-serif;
+	font-size: 10pt;
+
+	color: #1e1e1e;
 }
 
 body {
