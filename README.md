@@ -3,9 +3,9 @@ Chrome Tic Tac Toe is a simple Web Application for Google Chrome. It runs entire
 
 # Building #
 To build the extension, run
-    bundle install
-followed by
-    rake
+    $ gem install bundler
+    $ bundle install
+    $ rake
 The resulting extension will be in dist/, signed with test keys.
 
 # Installing #
