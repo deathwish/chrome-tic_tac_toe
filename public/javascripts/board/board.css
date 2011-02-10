@@ -1,8 +1,28 @@
-td {
-	font-size: 11pt;
+#game_board table {
+	font-size: 12pt;
+	font-family: Helvetica, Ariel, sans-serif;
+	border-collapse:collapse;
+}
+
+#game_board tr {
+	border-bottom: 2px solid black;
+}
+
+#game_board tr:last-child {
+	border-bottom: 0px solid white
+}
+
+#game_board td {
+	padding-top: 0.2em;
 	text-align: center;
-	line-height: 1em;
-	height: 13pt;
-	min-width: 1em;
-	border: 1px solid gold;
+	line-height: 0.8em;
+	height: 1.2em;
+	width: 1em;
+}
+
+#game_board tr td:first-child { 
+	border-right: 2px solid black;
+}
+#game_board tr td:last-child { 
+	border-left: 2px solid black;
 }
