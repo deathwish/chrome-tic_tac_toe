@@ -9,7 +9,7 @@ followed by
 The resulting extension will be in dist/, signed with test keys.
 
 # Installing #
-In Google Chrome, navigate to chrome-tic-tac-toe/dist, and click on the .crx file, and Chrome should prompt you to install the extension. It should then be available under the "Apps" section of the default new tab page.
+In Google Chrome, navigate to chrome-tic_tac_toe/dist, and click on the .crx file, and Chrome should prompt you to install the extension. It should then be available under the "Apps" section of the default new tab page.
 
 # Developing #
 Chrome Tic Tac Toe uses prototype.js as its core library, Sprockets for Javascript merge and asset management, 
