@@ -1,7 +1,10 @@
 #game_board table {
-	font-size: 12pt;
+	font-size: 36pt;
 	font-family: Helvetica, Ariel, sans-serif;
+
 	border-collapse:collapse;
+
+	margin: 0px auto;
 }
 
 #game_board tr {
@@ -16,8 +19,8 @@
 	padding-top: 0.2em;
 	text-align: center;
 	line-height: 0.8em;
-	height: 1.2em;
-	width: 1em;
+	height: 1.1em;
+	width: 1.2em;
 }
 
 #game_board tr td:first-child { 
