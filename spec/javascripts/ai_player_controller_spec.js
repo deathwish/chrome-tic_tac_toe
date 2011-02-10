@@ -36,30 +36,45 @@ describe('an ai player controller', function(){
 			var board;
 			var listener;
 			beforeEach(function(){
-				spyOn(controller.player(), 'move').andReturn([0, 0]);
 				listener = jasmine.createSpy();
-				document.observe('board:clicked', listener);
 				spyOn(BoardControllerMock, 'board').andCallThrough();
-				controller.move(BoardControllerMock);
+				document.observe('board:clicked', listener);
 			});
 
 			afterEach(function(){
 				document.stopObserving('board:clicked', listener);
 			});
 
-			it('retrieves the board from the controller', function(){
-				expect(BoardControllerMock.board).toHaveBeenCalled();
+			describe("on a board with open spaces", function(){
+				beforeEach(function(){
+					spyOn(controller.player(), 'move').andReturn([0, 0]);
+					controller.move(BoardControllerMock);
+				});
+
+				it('retrieves the board from the controller', function(){
+					expect(BoardControllerMock.board).toHaveBeenCalled();
+				});
+
+				it('calls the ai players move method with a board', function(){
+					expect(controller.player().move.mostRecentCall.args[0]).toBeA(Board);
+				});
+
+			    it('fires a board:clicked event with the coordinates provided by the ai and the controller', function(){
+					expect(listener).toHaveBeenCalled();
+					expect(listener.mostRecentCall.args[0].memo.x).toEqual(0);
+					expect(listener.mostRecentCall.args[0].memo.y).toEqual(0);
+					expect(listener.mostRecentCall.args[0].memo.controller).toEqual(BoardControllerMock);
+				});
 			});
 
-			it('calls the ai players move method with a board', function(){
-				expect(controller.player().move.mostRecentCall.args[0]).toBeA(Board);
-			});
-
-			it('fires a board:clicked event with the coordinates provided by the ai and the controller', function(){
-				expect(listener).toHaveBeenCalled();
-				expect(listener.mostRecentCall.args[0].memo.x).toEqual(0);
-				expect(listener.mostRecentCall.args[0].memo.y).toEqual(0);
-				expect(listener.mostRecentCall.args[0].memo.controller).toEqual(BoardControllerMock);
+			describe("on a board with no free spaces", function(){
+				beforeEach(function(){
+					spyOn(controller.player(), 'move').andReturn(null);
+					controller.move(BoardControllerMock);
+				});
+				it('does not fire a board:clicked event', function(){
+					expect(listener).not.toHaveBeenCalled();
+				});
 			});
 		});
 

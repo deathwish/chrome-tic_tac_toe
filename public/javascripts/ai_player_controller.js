@@ -25,7 +25,8 @@ var AIPlayerController = Class.create(BaseController, {
 	{
    	   var board = controller.board();
 	   var pt = this.player().move(board);
-	   document.fire('board:clicked', {x: pt[0], y: pt[1], controller: controller});
+	   if(pt)
+		  document.fire('board:clicked', {x: pt[0], y: pt[1], controller: controller});
 	},
 	onComplete: function($super, transport)
 	{

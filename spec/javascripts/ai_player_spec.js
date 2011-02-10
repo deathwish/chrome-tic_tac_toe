@@ -183,6 +183,10 @@ describe('an AI player', function(){
 			expect(player.move(new Board('XOX OXOXO'))).toEqual([1, 0]);
 			expect(player.move(new Board('XOXXO OXO'))).toEqual([1, 2]);
 		});
+
+		it('returns null when called with a drawn board', function(){
+			expect(player.move(new Board('XOXOOXXXO'))).toBeNull();
+		});
 	});
 
 	describe('playing as "O"', function(){
