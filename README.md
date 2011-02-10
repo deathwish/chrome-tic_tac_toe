@@ -1,5 +1,5 @@
 # About #
-Chrome Tic Tac Toe is a simple Web Application for Google Chrome. It runs entirely locally, and uses an efficient rule based approach to provide an AI opponent so that you can lose all by yourself, rather then in the company of others.
+Chrome Tic Tac Toe is a simple Web Application for Google Chrome. It runs entirely locally, and uses an efficient rule based approach to provide an AI opponent so that you can lose all by yourself, rather than in the company of others.
 
 # Building #
 To build the extension, run
