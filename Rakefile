@@ -1,4 +1,4 @@
-require 'lib/boot.rb'
+require './lib/boot.rb'
 
 task :default => :crx
 
