@@ -18,7 +18,7 @@ describe('turn order', function(){
 		expect(turn_order.current()).toEqual('O');
 	});
 
-	it("should be back to 'X' after two turns have beentaken", function(){
+	it("should return to 'X' after two turns have been taken", function(){
 		turn_order.turn();
 		turn_order.turn();
 		expect(turn_order.current()).toEqual('X');
