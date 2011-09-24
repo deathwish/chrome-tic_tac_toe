@@ -3,9 +3,11 @@ Chrome Tic Tac Toe is a simple Web Application for Google Chrome. It runs entire
 
 # Building #
 To build the extension, run
+
     $ gem install bundler
     $ bundle install
-    $ rake
+    $ bundle exec rake
+
 The resulting extension will be in dist/, signed with test keys.
 
 # Installing #
@@ -15,6 +17,8 @@ In Google Chrome, navigate to chrome-tic_tac_toe/dist, and click on the .crx fil
 Chrome Tic Tac Toe uses prototype.js as its core library, Sprockets for Javascript merge and asset management, 
 and Jasmine for unit and functional tests. More details on the last can be found in the Jasmine documentation, 
 however if you are merely interested in running the test suite, 
-    rake jasmine
+
+     $ bundle exec rake jasmine
+
 will suffice. Note that presently you will need to rebuild the project before rerunning tests, as the Jasmine server 
 is not aware of the Sprockets build sequence.
